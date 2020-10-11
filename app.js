@@ -1,28 +1,51 @@
-/**
- * Example store structure
- */
-const store = {
+const STORE = {
   // 5 or more questions are required
   questions: [
     {
-      question: 'What color is broccoli?',
+      question: 'How fast can wolves sprint?',
       answers: [
-        'red',
-        'orange',
-        'pink',
-        'green'
+        '16-18 mph',
+        '26-28 mph',
+        '36-38 mph',
+        '46-48 mph'
       ],
-      correctAnswer: 'green'
+      correctAnswer: '36-38 mph'
     },
     {
-      question: 'What is the current year?',
+      question: 'What is a wolves average lifespan in the wild?',
       answers: [
-        '1970',
-        '2015',
-        '2019',
-        '2005'
+        '13 years',
+        '14 years',
+        '15 years',
+        '16 years'
       ],
-      correctAnswer: '2019'
+      correctAnswer: '13 years'
+    }
+    {
+      question: 'How many pounds of meat can a wolf eat in one sitting?',
+      answers: [
+        '5 pounds',
+        '10 pounds',
+        '15 pounds',
+        '20 pounds'
+      ],
+      correctAnswer: '20 pounds'
+    }
+    {
+      question: 'True or False: Wolves help improve riparian areas (the wetland areas adjacent to rivers and streams).',
+      answers: [
+        'True',
+        'False'
+      ],
+      correctAnswer: 'True'
+    }
+    {
+      question: 'True or False: Wolves will not prey on injured, sick, or old elk, moose, and deer.',
+      answers: [
+        'True',
+        'False'
+      ],
+      correctAnswer: 'False'
     }
   ],
   quizStarted: false,
