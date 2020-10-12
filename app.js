@@ -20,7 +20,7 @@ const STORE = {
         '16 years'
       ],
       correctAnswer: '13 years'
-    }
+    },
     {
       question: 'How many pounds of meat can a wolf eat in one sitting?',
       answers: [
@@ -30,7 +30,7 @@ const STORE = {
         '20 pounds'
       ],
       correctAnswer: '20 pounds'
-    }
+    },
     {
       question: 'True or False: Wolves help improve riparian areas (the wetland areas adjacent to rivers and streams).',
       answers: [
@@ -38,7 +38,7 @@ const STORE = {
         'False'
       ],
       correctAnswer: 'True'
-    }
+    },
     {
       question: 'True or False: Wolves will not prey on injured, sick, or old elk, moose, and deer.',
       answers: [
@@ -72,10 +72,114 @@ const STORE = {
 
 // These functions return HTML templates
 
+function homePage(){
+  return `
+  <div>
+    <h2>Welcome to the Wolf facts Quiz!</h2>
+    <button id='start'>Start Quiz</button>
+  </div> 
+  `
+}
+
+function createAnswers(){
+  let answers = STORE.questions[STORE.questionNumber].answers;
+  let myReturn = '';
+  let i = 0;
+  answers.forEach((element) => {
+      myReturn += `
+    <li><input id="answer${i}" name="answers" type="radio" value="${i}" required>
+    <label for = "answer${i}">${element}</label></li>
+    `;
+    i++;
+    });
+  return myReturn;
+}
+
+function questionPage(){
+  let currentQuestion = STORE.questions[STORE.questionNumber]
+  return `
+  <div>
+    <h3>Question ${STORE.questionNumber + 1} of ${STORE.questions.length}</h3>
+    <h4>${STORE.score} of ${STORE.questions.length} correct</h4>
+  </div>
+  <div id=questionForm>
+    <form>
+      <h3>${currentQuestion.question}</h3> 
+        <ol style='list-style-type: none;'>
+          ${createAnswers()}
+        </ol>   
+      <button>Submit</button>
+    </form>
+  </div>
+  `
+}
+
+function resultsPage(){
+  return `
+  <div>
+    <h3>Quiz Complete!</h3>
+    <h4>You got ${STORE.score} of ${STORE.questions.length} correct</h4>
+    <button id="restart">Restart?</button>
+  </div>
+  `
+}
+
 /********** RENDER FUNCTION(S) **********/
 
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
 
+function render(){
+  let content;
+  content = (STORE.quizStarted === false) ? content = homePage(): 
+  content = (STORE.quizStarted === true && STORE.questionNumber < STORE.questions.length) ? content = questionPage():
+  content = resultsPage();
+  $('main').html(content);
+}
+
 /********** EVENT HANDLER FUNCTIONS **********/
 
 // These functions handle events (submit, click, etc)
+
+function startQuiz(){
+  $('#quiz').on('click','#start',() => {
+    STORE.quizStarted = true;
+    render();
+  });
+}
+function answerSubmitted(){
+  $('#quiz').on('submit','form',e => {
+    e.preventDefault();
+    let correctAnswer = STORE.questions[STORE.questionNumber].correctAnswer;
+    let answerposition = $('input[name=answers]:checked').val();
+    let answerId = `#answer${answerposition}`;
+    let answer = STORE.questions[STORE.questionNumber].answers[answerposition];
+    let response = (answer === correctAnswer) ? "<div class='correct'>Correct! Great Job!</div>" : `<div class = "incorrect">Incorrect, the correct answer was ${correctAnswer}</div>`;
+    if(answer === correctAnswer)STORE.score++; 
+    $(answerId).closest('li').append(response);
+    $("button").remove();
+    STORE.questionNumber++
+    $("#questionForm").append('<button id="next"> Next </button>');
+  });
+}
+function nextQuestion(){
+  $('#quiz').on('click','#next',() => {
+    render();
+  });
+}
+function restartQuiz(){
+  $('#quiz').on('click','#restart',() => {
+    STORE.quizStarted = false;
+    render();
+  });
+}
+
+
+function quizApp(){
+  render();
+  startQuiz();
+  answerSubmitted();
+  nextQuestion();
+  restartQuiz();
+}
+
+$(quizApp);
