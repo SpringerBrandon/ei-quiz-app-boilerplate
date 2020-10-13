@@ -9,7 +9,8 @@ const STORE = {
         '36-38 mph',
         '46-48 mph'
       ],
-      correctAnswer: '36-38 mph'
+      correctAnswer: '36-38 mph',
+      img: 'img/sprint.jpg'
     },
     {
       question: 'What is a wolves average lifespan in the wild?',
@@ -19,7 +20,8 @@ const STORE = {
         '15 years',
         '16 years'
       ],
-      correctAnswer: '13 years'
+      correctAnswer: '13 years',
+      img: 'img/lifespan.jpeg'
     },
     {
       question: 'How many pounds of meat can a wolf eat in one sitting?',
@@ -29,7 +31,8 @@ const STORE = {
         '15 pounds',
         '20 pounds'
       ],
-      correctAnswer: '20 pounds'
+      correctAnswer: '20 pounds',
+      img: 'img/meat.jpg'
     },
     {
       question: 'True or False: Wolves help improve riparian areas (the wetland areas adjacent to rivers and streams).',
@@ -37,7 +40,8 @@ const STORE = {
         'True',
         'False'
       ],
-      correctAnswer: 'True'
+      correctAnswer: 'True',
+      img: 'img/river.png'
     },
     {
       question: 'True or False: Wolves will not prey on injured, sick, or old elk, moose, and deer.',
@@ -45,7 +49,8 @@ const STORE = {
         'True',
         'False'
       ],
-      correctAnswer: 'False'
+      correctAnswer: 'False',
+      img: 'img/hunt.jpg'
     }
   ],
   quizStarted: false,
@@ -75,7 +80,7 @@ const STORE = {
 function homePage(){
   return `
   <div>
-    <h2>Welcome to the Wolf facts Quiz!</h2>
+    <h2>Welcome to the Wolf Facts Quiz!</h2>
     <button id='start'>Start Quiz</button>
   </div> 
   `
@@ -102,24 +107,34 @@ function questionPage(){
     <h3>Question ${STORE.questionNumber + 1} of ${STORE.questions.length}</h3>
     <h4>${STORE.score} of ${STORE.questions.length} correct</h4>
   </div>
-  <div id=questionForm>
-    <form>
-      <h3>${currentQuestion.question}</h3> 
-        <ol style='list-style-type: none;'>
-          ${createAnswers()}
-        </ol>   
-      <button>Submit</button>
-    </form>
+  <div class="group">
+    <div id=questionForm class="item">
+      <form>
+        <h3>${currentQuestion.question}</h3> 
+          <ol style='list-style-type: none;'>
+            ${createAnswers()}
+          </ol>   
+        <button>Submit</button>
+      </form>
+    </div>
+    <div class="item">
+      <img src="${currentQuestion.img}" alt="Question Picture">
+    </div>
   </div>
   `
 }
 
 function resultsPage(){
   return `
-  <div>
-    <h3>Quiz Complete!</h3>
-    <h4>You got ${STORE.score} of ${STORE.questions.length} correct</h4>
-    <button id="restart">Restart?</button>
+  <div class ="group">
+    <div class="item">
+      <h3>Quiz Complete!</h3>
+      <h4>You got ${STORE.score} of ${STORE.questions.length} correct</h4>
+      <button id="restart">Restart?</button>
+    </div>
+    <div class="item">
+      <img src="img/facts_orig.jpg" alt="Wolf Facts">
+    </div>
   </div>
   `
 }
@@ -153,7 +168,7 @@ function answerSubmitted(){
     let answerposition = $('input[name=answers]:checked').val();
     let answerId = `#answer${answerposition}`;
     let answer = STORE.questions[STORE.questionNumber].answers[answerposition];
-    let response = (answer === correctAnswer) ? "<div class='correct'>Correct! Great Job!</div>" : `<div class = "incorrect">Incorrect, the correct answer was ${correctAnswer}</div>`;
+    let response = (answer === correctAnswer) ? "<div class='correct'>Correct! Great Job!</div>" : `<div class="incorrect">Incorrect, the correct answer was ${correctAnswer}</div>`;
     if(answer === correctAnswer)STORE.score++; 
     $(answerId).closest('li').append(response);
     $("button").remove();

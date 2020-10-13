@@ -6,3 +6,72 @@
   * https://github.com/andreacardybailey/responsive_example/blob/master/styles/responsive-base.css 
   *
 */
+
+*{
+  color: white;
+}
+
+body {
+  text-align: center;
+  background-image: url('img/bg.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+}
+
+div{
+  background: rgba(0, 0, 0, .5);
+  padding: 1%;
+  width: 95%;
+  margin: auto;
+}
+
+img{
+  width: 90%;
+}
+
+#questionForm{
+  display: inline-block;
+  text-align: left;
+  
+}
+
+h3{
+  text-align: center;
+}
+
+button{
+  display: block;
+  color: black;
+  width: 40%;
+  margin-left: 30%;
+  margin-right: 30%
+}
+
+.correct{
+  background: rgba(154, 205, 50, .5);
+  color: black;
+}
+
+.incorrect{
+  background: rgba(255, 77, 77, .5);
+  color: white;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  flex: 1;
+  margin: 10px;
+}
+
+@media only screen and (min-width: 1125px) {
+  body {
+    width: 1125px;
+    text-align: center;
+    margin: auto;
+  }
+}
