@@ -184,6 +184,8 @@ function nextQuestion(){
 function restartQuiz(){
   $('#quiz').on('click','#restart',() => {
     STORE.quizStarted = false;
+    STORE.questionNumber = 0;
+    STORE.score = 0;
     render();
   });
 }
